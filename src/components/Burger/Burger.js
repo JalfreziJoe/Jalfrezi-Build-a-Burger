@@ -5,7 +5,7 @@ import Ingredient from './Ingredient/Ingredient';
 const burger = (props) => {
     let ingredientsArr = Object.keys(props.ingredients).map(indKey => {
         return [...Array(props.ingredients[indKey])].map( (_, amount) => {
-            console.log('Ingredient: '+indKey+' amount: '+amount);
+            //console.log('Ingredient: '+indKey+' amount: '+amount);
             return <Ingredient key={indKey+amount} type={indKey} />
         });
     }).reduce((arr, el) => {
@@ -14,7 +14,7 @@ const burger = (props) => {
     if (ingredientsArr.length === 0) {
         ingredientsArr = <p>Please add some ingredients</p>;
     }
-    console.log(ingredientsArr);
+    //console.log(ingredientsArr);
     return(
         <div className={classes.Burger}>
             <Ingredient type="top" />
