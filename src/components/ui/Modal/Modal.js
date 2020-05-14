@@ -6,7 +6,7 @@ import Aux from '../../../hoc/Auxillery/Auxillery';
 class Modal extends Component{
 
     shouldComponentUpdate(nextProps, nextState) {
-        return nextProps.visible !== this.props.visible;
+        return nextProps.visible !== this.props.visible || nextProps.children !== this.props.children;
     }
 
     componentDidUpdate( ){
