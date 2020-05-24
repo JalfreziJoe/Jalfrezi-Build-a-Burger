@@ -30,6 +30,7 @@ class BurgerBuilder extends Component {
     }
 
     componentDidMount() {
+        console.log(this.props);
         axios.get('https://jalfrezi-build-a-burger.firebaseio.com/ingredients.json')
             .then(response => {
                 this.setState({ingredients:response.data});
@@ -89,33 +90,13 @@ class BurgerBuilder extends Component {
     }
 
     purschaseContinueHandler= () => {
-        this.setState({loading:true});
-        //console.log('purchase continue');
-        const thisOrder = {
-            ingredients: this.state.ingredients,
-            price: this.state.totalPrice, // not a setup on a production app. Price should be totalled on the backend
-            customer: {
-                name: 'Mr Hot Spicy',
-                address: {
-                    address1:'20 Test Street',
-                    address2:'Test Village',
-                    town: 'Testy Test',
-                    county: 'Sussex',
-                    postcode: 'TE1 2ST'
-                },
-                    email: 'test@test.com'
-                },
-                delivery: 'asap'
-
-            }
-        
-        axios.post('/orders.json', thisOrder) // the .json is just for firebase DB only
-            .then(response =>  {
-                this.setState({loading:false, moveToOrder:false})
-            })
-            .catch(error => {
-                this.setState({loading:false, moveToOrder:false})
-            });
+        const ingredientParam = [];
+        for (let i in this.state.ingredients) {
+            ingredientParam.push(encodeURIComponent(i) + '='+ encodeURIComponent(this.state.ingredients[i]));
+        }
+        ingredientParam.push(encodeURIComponent('price') + '=' + encodeURIComponent(this.state.totalPrice));
+        const ingredientParamString = ingredientParam.join('&');
+        this.props.history.push({pathname:'/checkout', search:'?'+ingredientParamString});
     }       
 
     render() {
