@@ -3,13 +3,18 @@ import classes from './Input.module.css';
 
 const input =(props) => {
     let inputElement = null;
+    const cssClasses = [classes.Input];
+    if (props.inValid && props.shouldValidate && props.touched) {
+        cssClasses.push(classes.InValid);
+    }
 
+    const stringClasses = cssClasses.join(' ');
     switch(props.elementType) {
         case 'input':
-            inputElement = <input className={classes.Input} {...props.elementConfig} value={props.value} />
+            inputElement = <input onChange={props.changed} className={stringClasses} {...props.elementConfig} value={props.value} />
             break;
         case 'select':
-            inputElement = (<select className={classes.Input} value={props.value} >
+            inputElement = (<select onChange={props.changed} className={stringClasses} value={props.value} >
                     {props.elementConfig.options.map(option => (
                         <option key={option.value} value={option.value}>
                             {option.displayValue}
@@ -18,10 +23,10 @@ const input =(props) => {
                 </select>);
             break;
         case 'textarea':
-            inputElement = <textarea className={classes.Input} {...props.elementConfig} value={props.value} />
+            inputElement = <textarea onChange={props.changed} className={stringClasses} {...props.elementConfig} value={props.value} />
             break;
         default:
-            inputElement = <input className={classes.Input} {...props.elementConfig} value={props.value} />
+            inputElement = <input onChange={props.changed} className={stringClasses} {...props.elementConfig} value={props.value} />
             break;
     }
     
