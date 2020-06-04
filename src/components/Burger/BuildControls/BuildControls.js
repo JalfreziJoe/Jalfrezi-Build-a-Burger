@@ -21,7 +21,7 @@ const buildControls = (props) => (
                 disable={props.disabledInfo[control.type]}
              />
         ))}
-        <button className={classes.OrderButton} onClick={props.onOrder} disabled={props.readyToOrder}>BUY NOW</button>
+        <button className={classes.OrderButton} onClick={props.onOrder} disabled={props.readyToOrder}>{props.isAuth? 'BUY NOW':'Sign up to order'}</button>
     </div>
 );
 

@@ -124,10 +124,11 @@ class ContactData extends Component {
         const thisOrder = {
             ingredients: this.props.ings,
             price: this.props.price, // not a setup on a production app. Price should be totalled on the backend
-            orderData: formData
+            orderData: formData,
+            userId: this.props.userId
 
             }
-        this.props.onOrderBurger(thisOrder);
+        this.props.onOrderBurger(thisOrder, this.props.token);
         // axios.post('/orders.json', thisOrder) // the .json is just for firebase DB only
         //     .then(response =>  {
         //         //this.setState({loading:false, moveToOrder:false})
@@ -218,13 +219,15 @@ const mapState = state => {
     return {
         ings: state.burgerBuilder.ingredients,
         price: state.burgerBuilder.totalPrice,
-        loading: state.order.loading
+        loading: state.order.loading,
+        token: state.auth.idToken,
+        userId: state.auth.userId
     }
 }
 
 const mapDispatch = dispatch => {
     return {
-        onOrderBurger: (orderData) => dispatch(actions.purchaseBurger(orderData))
+        onOrderBurger: (orderData, token) => dispatch(actions.purchaseBurger(orderData, token))
     }
 }
 
